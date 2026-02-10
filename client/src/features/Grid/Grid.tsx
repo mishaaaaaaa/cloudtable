@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRows, useUpdateRow } from "../../hooks/useRows";
+import { useRealtime } from "../../hooks/useRealtime"; // Import realtime hook
 import type { Row } from "../../types";
 import type { ColumnDef, CellContext } from "@tanstack/react-table";
 
@@ -64,6 +65,7 @@ const PriorityCell = ({ getValue, row, column, table }: CellContext<Row, unknown
 
 export const Grid: React.FC = () => {
   const { data: rows = [], isLoading } = useRows();
+  useRealtime(); // Enable realtime sync
   const updateMutation = useUpdateRow();
   const parentRef = useRef<HTMLDivElement>(null);
 
