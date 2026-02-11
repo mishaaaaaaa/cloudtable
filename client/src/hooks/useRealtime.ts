@@ -3,8 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { io } from "socket.io-client";
 import { KEYS } from "./useRowsData";
 import type { Row } from "../types";
-
-const SOCKET_URL = "http://localhost:4000";
+import { SOCKET_URL } from "../config";
 
 export const useRealtime = () => {
   const queryClient = useQueryClient();

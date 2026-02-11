@@ -9,7 +9,7 @@ export interface Row {
   status: "Active" | "Pending" | "Blocked" | "Archived";
   priority: "High" | "Medium" | "Low";
   category: string;
-  estimated_value: string; // Postgres NUMERIC returns string
+  estimated_value: string;
   budget: string;
   expenses: string;
   rating: number;

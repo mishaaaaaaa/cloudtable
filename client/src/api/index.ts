@@ -1,7 +1,6 @@
 import axios from "axios";
 import type { Row, UpdateRowPayload } from "../types";
-
-const API_URL = "http://localhost:4000"; // Port 4000 as per server setup
+import { API_URL } from "../config";
 
 export const apiClient = axios.create({
   baseURL: API_URL,
