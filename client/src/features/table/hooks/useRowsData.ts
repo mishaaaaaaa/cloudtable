@@ -41,6 +41,7 @@ export const useUpdateRow = () => {
     },
     // If the mutation fails, use the context returned from onMutate to roll back
     onError: (_err, _newRow, context) => {
+      // The global interceptor already shows the error message
       if (context?.previousRows) {
         queryClient.setQueryData(KEYS.ROWS, context.previousRows);
       }

@@ -15,6 +15,10 @@ export const useRealtime = () => {
       console.log("socket: connected");
     });
 
+    socket.on("connect_error", (error) => {
+      console.error("socket: connect_error", error);
+    });
+
     socket.on("row_update", (updatedRow: Row) => {
       console.log("socket: row_update", updatedRow);
 

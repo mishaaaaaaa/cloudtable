@@ -4,9 +4,10 @@ import { useColumnsData } from "@/features/table/hooks/useColumnsData";
 import { useRealtime } from "@/features/table/hooks/useRealtime";
 import { Table } from "@/features/table/components/table";
 import type { Row } from "@/features/table/types";
+import { TableWrapper } from "./wrappers/table-wrapper";
 
 export const Grid: React.FC = () => {
-  const { data: rows = [], isLoading } = useRowsData();
+  const { data: rows = [], isLoading, isError } = useRowsData();
   useRealtime();
   const updateMutation = useUpdateRow();
   const columns = useColumnsData();
@@ -22,5 +23,9 @@ export const Grid: React.FC = () => {
     [updateMutation],
   );
 
-  return <Table rows={rows} columns={columns} isLoading={isLoading} onUpdateData={handleUpdateData} />;
+  return (
+    <TableWrapper isLoading={isLoading} isError={isError}>
+      <Table rows={rows} columns={columns} isLoading={isLoading} isError={isError} onUpdateData={handleUpdateData} />;
+    </TableWrapper>
+  );
 };
