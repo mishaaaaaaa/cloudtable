@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
-import { useRowsData, useUpdateRow } from "../../hooks/useRowsData";
-import { useColumnsData } from "../../hooks/useColumnsData";
-import { useRealtime } from "../../hooks/useRealtime";
+import { useRowsData, useUpdateRow } from "./hooks/useRowsData";
+import { useColumnsData } from "./hooks/useColumnsData";
+import { useRealtime } from "./hooks/useRealtime";
 import { Table } from "./components/table";
 import type { Row } from "../../types";
 

@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Row } from "../types";
-import { BasicCell } from "../features/table/components/basic-cell";
-import { DropdownCell } from "../features/table/components/dropdown-cell";
-import { STATUS_OPTIONS, PRIORITY_OPTIONS } from "../features/table/data/constants";
+import type { Row } from "../../../types";
+import { BasicCell } from "../components/basic-cell";
+import { DropdownCell } from "../components/dropdown-cell";
+import { STATUS_OPTIONS, PRIORITY_OPTIONS } from "../data/constants";
 
 export const useColumnsData = () => {
   return useMemo<ColumnDef<Row>[]>(

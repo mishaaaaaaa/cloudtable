@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useSearch } from "../../../../hooks/useSearch";
+import { useSearch } from "../../hooks/useSearch";
 import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { TableSkeleton } from "../skeleton";
