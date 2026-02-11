@@ -1,6 +1,6 @@
 export const TableHeader = () => {
   return (
-    <div className="h-12 bg-[#d72b3f] flex items-center px-4 justify-between text-white shrink-0 z-30 relative">
+    <div className="h-12 bg-[#73a3ee] flex items-center px-4 justify-between text-white shrink-0 z-30 relative">
       <div className="flex items-center gap-4">
         {/* Hamburger Icon */}
         <svg className="w-5 h-5 cursor-pointer opacity-80 hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">

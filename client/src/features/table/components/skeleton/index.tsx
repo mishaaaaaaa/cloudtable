@@ -3,7 +3,7 @@ export const TableSkeleton = () => {
     <div className="flex flex-col h-screen bg-white text-sm font-sans text-gray-900 border-t border-gray-200">
       {/* 1. App Header */}
 
-      <div className="h-14 bg-[#f0404a] flex items-center px-4">
+      <div className="h-14 bg-[#73a3ee] flex items-center px-4">
         <div className="w-32 h-6 bg-white/20 rounded animate-pulse"></div>
       </div>
 

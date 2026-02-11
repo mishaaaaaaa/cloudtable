@@ -12,11 +12,54 @@ interface SelectProps {
   options: SelectOption[];
   renderTrigger?: (selectedOption: SelectOption | undefined, isOpen: boolean) => React.ReactNode;
   placeholder?: string;
-  className?: string;
+  className?: string; // wrapper className
   dropdownClassName?: string;
   itemClassName?: string;
   align?: "left" | "right";
 }
+
+// Hook to handle dropdown state, positioning, and outside interactions
+const useDropdown = (align: "left" | "right") => {
+  const [isOpen, setIsOpen] = useState(false);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState<{ top: number; left?: number; right?: number }>({ top: 0 });
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const close = () => setIsOpen(false);
+
+    const handleEvent = (event: Event) => {
+      const target = event.target as Element;
+      // Close if interactions are outside the trigger AND outside the dropdown portal
+      if (!triggerRef.current?.contains(target as Node) && !target.closest(".select-dropdown-portal")) {
+        close();
+      }
+    };
+
+    document.addEventListener("mousedown", handleEvent as EventListener);
+    window.addEventListener("scroll", handleEvent, true); // Close on scroll to keep UI simple
+
+    return () => {
+      document.removeEventListener("mousedown", handleEvent as EventListener);
+      window.removeEventListener("scroll", handleEvent, true);
+    };
+  }, [isOpen]);
+
+  const toggle = () => {
+    if (!isOpen && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setPosition({
+        top: rect.bottom,
+        left: align === "left" ? rect.left : undefined,
+        right: align === "right" ? window.innerWidth - rect.right : undefined,
+      });
+    }
+    setIsOpen((prev) => !prev);
+  };
+
+  return { isOpen, setIsOpen, triggerRef, position, toggle };
+};
 
 export const Select: React.FC<SelectProps> = ({
   value,
@@ -29,68 +72,12 @@ export const Select: React.FC<SelectProps> = ({
   itemClassName = "px-3 py-1.5 text-[13px] hover:bg-blue-50 cursor-pointer flex items-center justify-between",
   align = "right",
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState<{ top: number; left?: number; right?: number }>({ top: 0 });
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      // Logic changed: Since interactions happen in portal, simpler check might fail.
-      // We rely on checking if target is NOT in containerRef (trigger).
-      // But clicking inside the portal should also NOT close it.
-      // However, selecting an option closes it, so clicking strictly inside portal is fine.
-      // But "handleClickOutside" implies clicking totally outside.
-
-      // Since portal is not inside containerRef, containerRef.contains() will be false for clicks in portal.
-      // So we need to stop propagation on the dropdown content or check if click target is inside the dropdown.
-      // But we don't have ref to dropdown node easily if using portal.
-
-      // Simplification: We add close behavior to options click.
-      // For clicking strictly outside:
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node) &&
-        !(event.target as Element).closest(".select-dropdown-portal") // Add a class to portal content to identify it
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    // Also close on scroll to avoid detached floating element
-    const handleScroll = (event: Event) => {
-      // Prevent closing if scrolling inside the dropdown itself (if it had overflow)
-      if ((event.target as Element).closest?.(".select-dropdown-portal")) return;
-      setIsOpen(false);
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-      window.addEventListener("scroll", handleScroll, true); // Capture phase to catch all scrolls
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      window.removeEventListener("scroll", handleScroll, true);
-    };
-  }, [isOpen]);
-
-  const handleOpen = () => {
-    if (!isOpen && containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      setPosition({
-        top: rect.bottom,
-        left: align === "left" ? rect.left : undefined,
-        right: align === "right" ? window.innerWidth - rect.right : undefined,
-      });
-    }
-    setIsOpen(!isOpen);
-  };
-
+  const { isOpen, setIsOpen, triggerRef, position, toggle } = useDropdown(align as "left" | "right");
   const selectedOption = options.find((opt) => opt.value === value);
 
   return (
-    <div className={className} ref={containerRef}>
-      <div onClick={handleOpen} className="h-full">
+    <div className={className} ref={triggerRef}>
+      <div onClick={toggle} className="h-full">
         {renderTrigger ? (
           renderTrigger(selectedOption, isOpen)
         ) : (

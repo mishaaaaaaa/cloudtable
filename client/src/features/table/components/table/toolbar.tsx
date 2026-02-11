@@ -1,8 +1,7 @@
 import React from "react";
 import type { Column } from "@tanstack/react-table";
 import type { Row } from "../../../../types";
-import { Select } from "../ui/select";
-import type { SelectOption } from "../ui/select";
+import { Select, type SelectOption } from "../ui/select";
 
 interface TableToolbarProps {
   searchValue: string;

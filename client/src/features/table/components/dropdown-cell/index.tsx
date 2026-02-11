@@ -1,7 +1,6 @@
 import type { CellContext } from "@tanstack/react-table";
 import type { Row } from "../../../../types";
-import { Select } from "../ui/select";
-import type { SelectOption } from "../ui/select";
+import { Select, type SelectOption } from "../ui/select";
 
 type DropdownCellProps = CellContext<Row, unknown> & {
   options: string[];
