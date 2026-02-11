@@ -1,10 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchRows, updateRow } from "../api";
 import type { Row } from "../types";
-
-export const KEYS = {
-  ROWS: ["rows"],
-};
+import { KEYS } from "../features/table/data/constants";
 
 export const useRowsData = () => {
   return useQuery({

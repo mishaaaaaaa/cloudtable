@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { io } from "socket.io-client";
-import { KEYS } from "./useRowsData";
+import { KEYS } from "../features/table/data/constants";
 import type { Row } from "../types";
 import { SOCKET_URL } from "../config";
 

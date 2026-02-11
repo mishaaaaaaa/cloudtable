@@ -3,9 +3,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import type { Row } from "../types";
 import { BasicCell } from "../features/table/components/basic-cell";
 import { DropdownCell } from "../features/table/components/dropdown-cell";
-
-const STATUS_OPTIONS = ["Active", "Pending", "Blocked", "Archived"];
-const PRIORITY_OPTIONS = ["High", "Medium", "Low"];
+import { STATUS_OPTIONS, PRIORITY_OPTIONS } from "../features/table/data/constants";
 
 export const useColumnsData = () => {
   return useMemo<ColumnDef<Row>[]>(
