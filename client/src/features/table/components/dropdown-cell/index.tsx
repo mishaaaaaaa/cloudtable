@@ -1,5 +1,7 @@
 import type { CellContext } from "@tanstack/react-table";
 import type { Row } from "../../../../types";
+import { Select } from "../ui/select";
+import type { SelectOption } from "../ui/select";
 
 type DropdownCellProps = CellContext<Row, unknown> & {
   options: string[];
@@ -9,17 +11,36 @@ type DropdownCellProps = CellContext<Row, unknown> & {
 export const DropdownCell = ({ getValue, row, column, table, options, selectClassName }: DropdownCellProps) => {
   const value = String(getValue() ?? "");
 
+  const selectOptions: SelectOption[] = options.map((opt) => ({
+    value: opt,
+    label: opt,
+  }));
+
+  const handleChange = (newValue: string) => {
+    table.options.meta?.updateData(row.index, column.id as keyof Row, newValue, row.original.id);
+  };
+
   return (
-    <select
-      value={value}
-      onChange={(event) => table.options.meta?.updateData(row.index, column.id as keyof Row, event.target.value, row.original.id)}
-      className={selectClassName ?? "w-full h-full bg-transparent outline-none cursor-pointer"}
-    >
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+    <div className="w-full h-full px-1 py-1">
+      <Select
+        value={value}
+        onChange={handleChange}
+        options={selectOptions}
+        placeholder="Select..."
+        className="w-full h-full"
+        dropdownClassName="absolute left-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50 transform -translate-y-1" // Adjust dropdown positioning slightly
+        renderTrigger={(selectedOption) => (
+          <div
+            className={`${selectClassName ?? "w-full h-full bg-transparent hover:bg-gray-50 rounded px-2 flex items-center justify-between cursor-pointer text-gray-700"}`}
+          >
+            <span className="truncate">{selectedOption?.label || value}</span>
+            <svg className="w-3 h-3 ml-1 opacity-40 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        )}
+        align="left"
+      />
+    </div>
   );
 };

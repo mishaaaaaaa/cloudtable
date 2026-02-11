@@ -1,12 +1,22 @@
-import { useState } from "react";
-import { getFilteredRowModel } from "@tanstack/react-table";
+import { useState, useMemo } from "react";
+import { getFilteredRowModel, type ColumnFiltersState } from "@tanstack/react-table";
 
 export const useSearch = () => {
-  const [globalFilter, setGlobalFilter] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [searchColumn, setSearchColumn] = useState("all");
+
+  const columnFilters = useMemo<ColumnFiltersState>(() => {
+    if (searchColumn === "all") return [];
+    return [{ id: searchColumn, value: searchValue }];
+  }, [searchColumn, searchValue]);
 
   return {
-    globalFilter,
-    setGlobalFilter,
+    searchValue,
+    setSearchValue,
+    searchColumn,
+    setSearchColumn,
+    globalFilter: searchColumn === "all" ? searchValue : undefined,
+    columnFilters,
     getFilteredRowModel: getFilteredRowModel(),
   };
 };

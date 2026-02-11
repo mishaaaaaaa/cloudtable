@@ -19,15 +19,16 @@ interface TableProps {
 
 export const Table: React.FC<TableProps> = ({ rows, columns, isLoading, onUpdateData }) => {
   const parentRef = useRef<HTMLDivElement>(null);
-  const { globalFilter, setGlobalFilter, getFilteredRowModel } = useSearch();
+  const { searchValue, setSearchValue, searchColumn, setSearchColumn, globalFilter, columnFilters, getFilteredRowModel } = useSearch();
 
   const table = useReactTable({
     data: rows,
     columns,
     state: {
       globalFilter,
+      columnFilters,
     },
-    onGlobalFilterChange: setGlobalFilter,
+    // We handle state updates via our hook's setters passed to toolbar
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel,
@@ -57,7 +58,13 @@ export const Table: React.FC<TableProps> = ({ rows, columns, isLoading, onUpdate
   return (
     <div className="flex flex-col h-screen w-full bg-white text-[13px] font-sans text-gray-900 overflow-hidden">
       <TableHeader />
-      <TableToolbar globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+      <TableToolbar 
+        searchValue={searchValue} 
+        setSearchValue={setSearchValue} 
+        searchColumn={searchColumn} 
+        setSearchColumn={setSearchColumn} 
+        columns={table.getAllLeafColumns()} 
+      />
 
       {/* Grid Container */}
       <div ref={parentRef} className="flex-1 overflow-auto bg-white relative">
