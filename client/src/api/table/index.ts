@@ -1,10 +1,5 @@
-import axios from "axios";
-import type { Row, UpdateRowPayload } from "../types";
-import { API_URL } from "../config";
-
-export const apiClient = axios.create({
-  baseURL: API_URL,
-});
+import { apiClient } from "../client";
+import type { Row, UpdateRowPayload } from "../../types";
 
 export const fetchRows = async (): Promise<Row[]> => {
   const response = await apiClient.get<Row[]>("/rows");
