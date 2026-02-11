@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import type { CellContext } from "@tanstack/react-table";
 import type { Row } from "../../../../types";
 import { Select, type SelectOption } from "../ui/select";
@@ -8,7 +9,13 @@ type DropdownCellProps = CellContext<Row, unknown> & {
 };
 
 export const DropdownCell = ({ getValue, row, column, table, options, selectClassName }: DropdownCellProps) => {
-  const value = String(getValue() ?? "");
+  const initialValue = String(getValue() ?? "");
+  const [value, setValue] = useState(initialValue);
+
+  // Sync with external updates
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   const selectOptions: SelectOption[] = options.map((opt) => ({
     value: opt,
@@ -16,6 +23,7 @@ export const DropdownCell = ({ getValue, row, column, table, options, selectClas
   }));
 
   const handleChange = (newValue: string) => {
+    setValue(newValue); // Immediate local update
     table.options.meta?.updateData(row.index, column.id as keyof Row, newValue, row.original.id);
   };
 
