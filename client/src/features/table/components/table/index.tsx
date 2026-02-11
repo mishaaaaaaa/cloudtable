@@ -56,14 +56,14 @@ export const Table: React.FC<TableProps> = ({ rows, columns, isLoading, onUpdate
   }
 
   return (
-    <div className="flex flex-col h-screen w-full bg-white text-[13px] font-sans text-gray-900 overflow-hidden">
+    <div className="flex flex-col h-full w-full bg-white text-[13px] font-sans text-gray-900 overflow-hidden rounded-lg shadow-sm">
       <TableHeader />
-      <TableToolbar 
-        searchValue={searchValue} 
-        setSearchValue={setSearchValue} 
-        searchColumn={searchColumn} 
-        setSearchColumn={setSearchColumn} 
-        columns={table.getAllLeafColumns()} 
+      <TableToolbar
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        searchColumn={searchColumn}
+        setSearchColumn={setSearchColumn}
+        columns={table.getAllLeafColumns()}
       />
 
       {/* Grid Container */}

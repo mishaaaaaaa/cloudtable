@@ -35,7 +35,7 @@ export const DropdownCell = ({ getValue, row, column, table, options, selectClas
         options={selectOptions}
         placeholder="Select..."
         className="w-full h-full"
-        dropdownClassName="absolute left-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50 transform -translate-y-1" // Adjust dropdown positioning slightly
+        dropdownClassName="absolute left-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50 transform -translate-y-1"
         renderTrigger={(selectedOption) => (
           <div
             className={`${selectClassName ?? "w-full h-full bg-transparent hover:bg-gray-50 rounded px-2 flex items-center justify-between cursor-pointer text-gray-700"}`}
