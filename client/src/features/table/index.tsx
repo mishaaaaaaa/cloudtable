@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
-import { useRowsData, useUpdateRow } from "./hooks/useRowsData";
-import { useColumnsData } from "./hooks/useColumnsData";
-import { useRealtime } from "./hooks/useRealtime";
-import { Table } from "./components/table";
-import type { Row } from "./types";
+import { useRowsData, useUpdateRow } from "@/features/table/hooks/useRowsData";
+import { useColumnsData } from "@/features/table/hooks/useColumnsData";
+import { useRealtime } from "@/features/table/hooks/useRealtime";
+import { Table } from "@/features/table/components/table";
+import type { Row } from "@/features/table/types";
 
 export const Grid: React.FC = () => {
   const { data: rows = [], isLoading } = useRowsData();

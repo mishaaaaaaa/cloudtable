@@ -1,9 +1,23 @@
 import { useMemo } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Row } from "../types";
-import { BasicCell } from "../components/basic-cell";
-import { DropdownCell } from "../components/dropdown-cell";
-import { STATUS_OPTIONS, PRIORITY_OPTIONS } from "../data/constants";
+import type { Row } from "@/features/table/types";
+import { BasicCell } from "@/features/table/components/basic-cell";
+import { DropdownCell } from "@/features/table/components/dropdown-cell";
+import { STATUS_OPTIONS, PRIORITY_OPTIONS } from "@/features/table/data/constants";
+
+const adjustDateFormat = (getValue: () => unknown): string | "" => {
+  const value = getValue() as string;
+
+  if (!value) return "";
+
+  return new Date(value).toLocaleString("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
 
 export const useColumnsData = () => {
   return useMemo<ColumnDef<Row>[]>(
@@ -52,33 +66,13 @@ export const useColumnsData = () => {
         accessorKey: "created_at",
         header: "Created",
         size: 150,
-        cell: ({ getValue }) => {
-          const value = getValue() as string;
-          if (!value) return "";
-          return new Date(value).toLocaleString("ru-RU", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          });
-        },
+        cell: ({ getValue }) => adjustDateFormat(getValue),
       },
       {
         accessorKey: "updated_at",
         header: "Updated",
         size: 150,
-        cell: ({ getValue }) => {
-          const value = getValue() as string;
-          if (!value) return "";
-          return new Date(value).toLocaleString("ru-RU", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          });
-        },
+        cell: ({ getValue }) => adjustDateFormat(getValue),
       },
     ],
     [],

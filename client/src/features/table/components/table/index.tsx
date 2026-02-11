@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
-import { useSearch } from "../../hooks/useSearch";
 import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { TableSkeleton } from "../skeleton";
+import { useSearch } from "@/features/table/hooks/useSearch";
+import { TableSkeleton } from "@/features/table/components/skeleton";
 import { TableHeader } from "./header";
 import { TableToolbar } from "./toolbar";
 import { TableFooter } from "./footer";
 
-import type { Row } from "../../types";
+import type { Row } from "@/features/table/types";
 import type { ColumnDef } from "@tanstack/react-table";
 
 interface TableProps {

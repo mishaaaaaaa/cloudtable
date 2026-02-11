@@ -1,5 +1,5 @@
-import { apiClient } from "../client";
-import type { Row, UpdateRowPayload } from "../../features/table/types";
+import { apiClient } from "@/api/client";
+import type { Row, UpdateRowPayload } from "@/features/table/types";
 
 export const fetchRows = async (): Promise<Row[]> => {
   const response = await apiClient.get<Row[]>("/rows");
