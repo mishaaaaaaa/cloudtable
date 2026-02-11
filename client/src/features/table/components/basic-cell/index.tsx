@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { CellContext } from "@tanstack/react-table";
-import type { Row } from "../../../../types";
 import { FloatingEditor } from "./floating-editor";
+import type { Row } from "../../types";
 
 type BasicCellProps = CellContext<Row, unknown> & {
   inputClassName?: string;

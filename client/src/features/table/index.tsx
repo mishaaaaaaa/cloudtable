@@ -3,7 +3,7 @@ import { useRowsData, useUpdateRow } from "./hooks/useRowsData";
 import { useColumnsData } from "./hooks/useColumnsData";
 import { useRealtime } from "./hooks/useRealtime";
 import { Table } from "./components/table";
-import type { Row } from "../../types";
+import type { Row } from "./types";
 
 export const Grid: React.FC = () => {
   const { data: rows = [], isLoading } = useRowsData();

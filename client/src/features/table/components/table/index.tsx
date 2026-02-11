@@ -7,7 +7,7 @@ import { TableHeader } from "./header";
 import { TableToolbar } from "./toolbar";
 import { TableFooter } from "./footer";
 
-import type { Row } from "../../../../types";
+import type { Row } from "../../types";
 import type { ColumnDef } from "@tanstack/react-table";
 
 interface TableProps {

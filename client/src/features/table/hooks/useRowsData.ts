@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchRows, updateRow } from "../../../api/table";
-import type { Row } from "../../../types";
+import type { Row } from "../types";
 import { KEYS } from "../data/constants";
 
 export const useRowsData = () => {
