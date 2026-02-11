@@ -1,5 +1,3 @@
-import React from "react";
-
 export const TableHeader = () => {
   return (
     <div className="h-12 bg-[#d72b3f] flex items-center px-4 justify-between text-white shrink-0 z-30 relative">
