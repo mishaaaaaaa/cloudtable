@@ -1,4 +1,4 @@
-import { Grid } from "./features/Grid/Grid";
+import { Grid } from "./features/table";
 
 function App() {
   return (

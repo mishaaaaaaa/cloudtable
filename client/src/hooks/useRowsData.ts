@@ -6,7 +6,7 @@ export const KEYS = {
   ROWS: ["rows"],
 };
 
-export const useRows = () => {
+export const useRowsData = () => {
   return useQuery({
     queryKey: KEYS.ROWS,
     queryFn: fetchRows,

@@ -1,114 +1,17 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useRows, useUpdateRow } from "../../hooks/useRows";
-import { useRealtime } from "../../hooks/useRealtime"; // Import realtime hook
-import type { Row } from "../../types";
-import type { ColumnDef, CellContext } from "@tanstack/react-table";
-
-// --- Cell Components ---
-const EditableTextCell = ({ getValue, row, column, table }: CellContext<Row, unknown>) => {
-  const initialValue = getValue() as string;
-  const [value, setValue] = useState(initialValue);
-
-  // Sync internal state if external data changes (e.g. via socket)
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  const onBlur = () => {
-    if (value !== initialValue) {
-      table.options.meta?.updateData(row.index, column.id as keyof Row, value, row.original.id);
-    }
-  };
-
-  return (
-    <input
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      onBlur={onBlur}
-      className="w-full h-full bg-transparent outline-none px-1 py-1 focus:ring-2 focus:ring-blue-500 rounded-sm -ml-1"
-    />
-  );
-};
-
-const StatusCell = ({ getValue, row, column, table }: CellContext<Row, unknown>) => {
-  const value = getValue() as string;
-  return (
-    <select
-      value={value}
-      onChange={(e) => table.options.meta?.updateData(row.index, column.id as keyof Row, e.target.value, row.original.id)}
-      className="w-full h-full bg-transparent outline-none cursor-pointer"
-    >
-      <option value="Active">Active</option>
-      <option value="Pending">Pending</option>
-      <option value="Blocked">Blocked</option>
-      <option value="Archived">Archived</option>
-    </select>
-  );
-};
-
-const PriorityCell = ({ getValue, row, column, table }: CellContext<Row, unknown>) => {
-  const value = getValue() as string;
-  return (
-    <select
-      value={value}
-      onChange={(e) => table.options.meta?.updateData(row.index, column.id as keyof Row, e.target.value, row.original.id)}
-      className="w-full h-full bg-transparent outline-none cursor-pointer"
-    >
-      <option value="High">High</option>
-      <option value="Medium">Medium</option>
-      <option value="Low">Low</option>
-    </select>
-  );
-};
+import { useRowsData, useUpdateRow } from "../../hooks/useRowsData";
+import { useColumnsData } from "../../hooks/useColumnsData";
+import { useRealtime } from "../../hooks/useRealtime";
 
 export const Grid: React.FC = () => {
-  const { data: rows = [], isLoading } = useRows();
-  useRealtime(); // Enable realtime sync
+  const { data: rows = [], isLoading } = useRowsData();
+  useRealtime();
   const updateMutation = useUpdateRow();
   const parentRef = useRef<HTMLDivElement>(null);
 
-  const columns = useMemo<ColumnDef<Row>[]>(
-    () => [
-      { accessorKey: "id", header: "ID", size: 60 },
-      {
-        accessorKey: "name",
-        header: "Name",
-        size: 200,
-        cell: EditableTextCell,
-      },
-      {
-        accessorKey: "status",
-        header: "Status",
-        size: 120,
-        cell: StatusCell,
-      },
-      {
-        accessorKey: "priority",
-        header: "Priority",
-        size: 100,
-        cell: PriorityCell,
-      },
-      {
-        accessorKey: "company",
-        header: "Company",
-        size: 200,
-        cell: EditableTextCell,
-      },
-      { accessorKey: "title", header: "Title", size: 200 },
-      { accessorKey: "email", header: "Email", size: 220 },
-      { accessorKey: "phone", header: "Phone", size: 150 },
-      { accessorKey: "estimated_value", header: "Value", size: 120 },
-      { accessorKey: "category", header: "Category", size: 120 },
-      { accessorKey: "rating", header: "Rating", size: 80 },
-      { accessorKey: "city", header: "City", size: 150 },
-      { accessorKey: "country", header: "Country", size: 150 },
-      { accessorKey: "website", header: "Website", size: 200 },
-      { accessorKey: "description", header: "Description", size: 300 },
-    ],
-    [],
-  );
+  const columns = useColumnsData();
 
   const table = useReactTable({
     data: rows,
@@ -117,7 +20,6 @@ export const Grid: React.FC = () => {
     getSortedRowModel: getSortedRowModel(),
     meta: {
       updateData: (rowIndex, columnId, value, rowId) => {
-        // Optimistic update via React Query (handled in useRows hook)
         updateMutation.mutate({
           id: rowId,
           colId: columnId,
