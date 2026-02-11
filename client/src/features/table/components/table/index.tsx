@@ -1,10 +1,12 @@
 import React, { useRef } from "react";
+import { useSearch } from "../../../../hooks/useSearch";
 import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { TableSkeleton } from "../skeleton";
 import { TableHeader } from "./header";
 import { TableToolbar } from "./toolbar";
 import { TableFooter } from "./footer";
+
 import type { Row } from "../../../../types";
 import type { ColumnDef } from "@tanstack/react-table";
 
@@ -17,12 +19,18 @@ interface TableProps {
 
 export const Table: React.FC<TableProps> = ({ rows, columns, isLoading, onUpdateData }) => {
   const parentRef = useRef<HTMLDivElement>(null);
+  const { globalFilter, setGlobalFilter, getFilteredRowModel } = useSearch();
 
   const table = useReactTable({
     data: rows,
     columns,
+    state: {
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel,
     meta: {
       updateData: (rowIndex, columnId, value, rowId) => {
         onUpdateData(rowIndex, String(columnId), value, rowId);
@@ -49,7 +57,7 @@ export const Table: React.FC<TableProps> = ({ rows, columns, isLoading, onUpdate
   return (
     <div className="flex flex-col h-screen w-full bg-white text-[13px] font-sans text-gray-900 overflow-hidden">
       <TableHeader />
-      <TableToolbar />
+      <TableToolbar globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
 
       {/* Grid Container */}
       <div ref={parentRef} className="flex-1 overflow-auto bg-white relative">

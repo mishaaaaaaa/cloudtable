@@ -1,4 +1,11 @@
-export const TableToolbar = () => {
+import React from "react";
+
+interface TableToolbarProps {
+  globalFilter: string;
+  setGlobalFilter: (value: string) => void;
+}
+
+export const TableToolbar: React.FC<TableToolbarProps> = ({ globalFilter, setGlobalFilter }) => {
   return (
     <div className="h-12 border-b border-gray-200 bg-white flex items-center px-4 gap-2 shrink-0 z-20 relative shadow-sm">
       <div className="flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors cursor-pointer font-medium">
@@ -57,7 +64,14 @@ export const TableToolbar = () => {
           <svg className="w-4 h-4 text-gray-400 mr-1 group-hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <input placeholder="Find" className="bg-transparent outline-none text-[13px] w-24 placeholder-gray-400 focus:w-40 transition-all duration-200" />
+          <input
+            key="search-input"
+            type="text"
+            placeholder="Find"
+            value={globalFilter || ""}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            className="bg-transparent outline-none text-[13px] w-24 placeholder-gray-400 focus:w-40 transition-all duration-200"
+          />
         </div>
       </div>
     </div>
