@@ -5,26 +5,31 @@ interface FloatingEditorProps {
   onChange: (val: string) => void;
   onBlur: () => void;
   rect: DOMRect | null;
+  type?: "text" | "number";
 }
 
-export const FloatingEditor = ({ value, onChange, onBlur, rect }: FloatingEditorProps) => {
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+export const FloatingEditor = ({ value, onChange, onBlur, rect, type = "text" }: FloatingEditorProps) => {
+  const inputRef = useRef<HTMLTextAreaElement | HTMLInputElement>(null);
 
   useLayoutEffect(() => {
-    if (textAreaRef.current && rect) {
-      textAreaRef.current.style.top = `${rect.top - 1}px`;
-      textAreaRef.current.style.left = `${rect.left - 1}px`;
-      textAreaRef.current.style.width = `${rect.width + 2}px`;
+    if (inputRef.current && rect) {
+      inputRef.current.style.top = `${rect.top - 1}px`;
+      inputRef.current.style.left = `${rect.left - 1}px`;
+      inputRef.current.style.width = `${rect.width + 2}px`;
 
-      textAreaRef.current.focus();
-      textAreaRef.current.setSelectionRange(value.length, value.length);
+      inputRef.current.focus();
 
-      textAreaRef.current.style.height = "35px";
-      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+      if (type === "text" && inputRef.current instanceof HTMLTextAreaElement) {
+        inputRef.current.setSelectionRange(value.length, value.length);
+        inputRef.current.style.height = "35px";
+        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+      } else {
+        inputRef.current.style.height = `${rect.height + 2}px`;
+      }
     }
-  }, [rect, value.length]);
+  }, [rect, value.length, type]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     onChange(e.target.value);
   };
 
@@ -40,20 +45,33 @@ export const FloatingEditor = ({ value, onChange, onBlur, rect }: FloatingEditor
 
   if (!rect) return null;
 
+  const commonClasses = "fixed z-[60] bg-white text-[13px] text-gray-900 border-2 border-blue-500 rounded-sm outline-none px-2 py-1.5 shadow-lg";
+
   return (
     <div className="fixed inset-0 z-50 bg-transparent" onClick={onBlur}>
-      <textarea
-        name="editor"
-        ref={textAreaRef}
-        value={value}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        className="fixed z-[60] bg-white text-[13px] text-gray-900 border-2 border-blue-500 rounded-sm outline-none px-2 py-1.5 overflow-hidden resize-none shadow-lg"
-        style={{
-          lineHeight: "1.2", // Match table line height approximation
-        }}
-        onClick={(e) => e.stopPropagation()}
-      />
+      {type === "text" ? (
+        <textarea
+          name="editor"
+          ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+          value={value}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          className={`${commonClasses} overflow-hidden resize-none`}
+          style={{ lineHeight: "1.2" }}
+          onClick={(e) => e.stopPropagation()}
+        />
+      ) : (
+        <input
+          type="number"
+          name="editor"
+          ref={inputRef as React.RefObject<HTMLInputElement>}
+          value={value}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          className={commonClasses}
+          onClick={(e) => e.stopPropagation()}
+        />
+      )}
     </div>
   );
 };
