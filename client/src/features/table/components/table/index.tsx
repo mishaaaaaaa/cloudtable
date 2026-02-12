@@ -2,8 +2,6 @@ import React, { useRef } from "react";
 import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useSearch } from "@/features/table/hooks/useSearch";
-import { TableSkeleton } from "@/features/table/components/skeleton";
-import { TableError } from "@/features/table/components/error";
 import { TableHeader } from "./header";
 import { TableToolbar } from "./toolbar";
 import { TableFooter } from "./footer";
@@ -14,12 +12,10 @@ import type { ColumnDef } from "@tanstack/react-table";
 interface TableProps {
   rows: Row[];
   columns: ColumnDef<Row>[];
-  isLoading: boolean;
-  isError: boolean;
   onUpdateData: (rowIndex: number, columnId: string, value: unknown, rowId: number) => void;
 }
 
-export const Table: React.FC<TableProps> = ({ rows, columns, isLoading, isError, onUpdateData }) => {
+export const Table: React.FC<TableProps> = ({ rows, columns, onUpdateData }) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const { searchValue, setSearchValue, searchColumn, setSearchColumn, globalFilter, columnFilters, getFilteredRowModel } = useSearch();
 
@@ -52,14 +48,6 @@ export const Table: React.FC<TableProps> = ({ rows, columns, isLoading, isError,
     estimateSize: () => 32, // Airtable standard row height
     overscan: 20,
   });
-
-  if (isLoading) {
-    return <TableSkeleton />;
-  }
-
-  if (isError) {
-    return <TableError />;
-  }
 
   return (
     <div className="flex flex-col h-full w-full bg-white text-[13px] font-sans text-gray-900 overflow-hidden rounded-lg shadow-sm">
