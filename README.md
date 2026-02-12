@@ -6,7 +6,7 @@ A high-performance data grid application capable of handling large datasets with
 
 The entire environment (Frontend, Backend, Database, Redis) is containerized.
 
-1. Run the application:
+1. Run the application (from cloudtable directory) :
 
    ```bash
    docker-compose up --build
