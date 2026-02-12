@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
-import { useRowsData, useUpdateRow } from "@/features/table/hooks/useRowsData";
-import { useColumnsData } from "@/features/table/hooks/useColumnsData";
-import { useRealtime } from "@/features/table/hooks/useRealtime";
+import { useRowsData, useUpdateRow } from "@/features/data-grid/hooks/useRowsData";
+import { useColumnsData } from "@/features/data-grid/hooks/useColumnsData";
+import { useRealtime } from "@/features/data-grid/hooks/useRealtime";
 import { TableWrapper } from "./wrappers/table-wrapper";
-import { Table } from "@/features/table/components/table";
-import type { Row } from "@/features/table/types";
+import { Table } from "@/features/data-grid/components/table";
+import type { Row } from "@/features/data-grid/types";
 
-export const Grid: React.FC = () => {
+const DataGrid: React.FC = () => {
   const { data: rows = [], isLoading, isError } = useRowsData();
   useRealtime();
   const updateMutation = useUpdateRow();
@@ -29,3 +29,5 @@ export const Grid: React.FC = () => {
     </TableWrapper>
   );
 };
+
+export default DataGrid;

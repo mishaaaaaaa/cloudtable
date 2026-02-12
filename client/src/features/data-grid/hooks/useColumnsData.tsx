@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Row } from "@/features/table/types";
-import { BasicCell } from "@/features/table/components/basic-cell";
-import { DropdownCell } from "@/features/table/components/dropdown-cell";
-import { STATUS_OPTIONS, PRIORITY_OPTIONS } from "@/features/table/data/constants";
+import type { Row } from "@/features/data-grid/types";
+import { BasicCell } from "@/features/data-grid/components/basic-cell";
+import { DropdownCell } from "@/features/data-grid/components/dropdown-cell";
+import { STATUS_OPTIONS, PRIORITY_OPTIONS } from "@/features/data-grid/data/constants";
 
 const adjustDateFormat = (getValue: () => unknown): string | "" => {
   const value = getValue() as string;

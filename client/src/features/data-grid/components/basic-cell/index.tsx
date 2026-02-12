@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { CellContext } from "@tanstack/react-table";
 import { FloatingEditor } from "./floating-editor";
-import type { Row } from "@/features/table/types";
+import type { Row } from "@/features/data-grid/types";
 
 type BasicCellProps = CellContext<Row, unknown> & {
   inputClassName?: string;

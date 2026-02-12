@@ -1,12 +1,12 @@
 import React, { useRef } from "react";
 import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useSearch } from "@/features/table/hooks/useSearch";
+import { useSearch } from "@/features/data-grid/hooks/useSearch";
 import { TableHeader } from "./header";
 import { TableToolbar } from "./toolbar";
 import { TableFooter } from "./footer";
 
-import type { Row } from "@/features/table/types";
+import type { Row } from "@/features/data-grid/types";
 import type { ColumnDef } from "@tanstack/react-table";
 
 interface TableProps {

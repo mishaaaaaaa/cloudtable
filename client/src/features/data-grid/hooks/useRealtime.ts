@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { socket } from "@/api/socket";
-import { KEYS } from "@/features/table/data/constants";
-import type { Row } from "@/features/table/types";
+import { KEYS } from "@/features/data-grid/data/constants";
+import type { Row } from "@/features/data-grid/types";
 
 export const useRealtime = () => {
   const queryClient = useQueryClient();
