@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { clsx } from "clsx";
+import { Icons } from "../icons";
 
 export interface SelectOption {
   value: string;
@@ -35,11 +36,7 @@ const SelectOptionItem = ({ option, isSelected, onSelect }: SelectOptionItemProp
       )}
     >
       <span>{option.label}</span>
-      {isSelected && (
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-        </svg>
-      )}
+      {isSelected && <Icons.Check className="h-4 w-4" />}
     </div>
   );
 };

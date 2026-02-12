@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type { CellContext } from "@tanstack/react-table";
 import { Select, type SelectOption } from "@/shared/ui/select";
+import { Icons } from "@/shared/ui/icons";
 import type { Row } from "@/features/data-grid/types";
 
 type DropdownCellProps = CellContext<Row, unknown> & {
@@ -39,9 +40,7 @@ export const DropdownCell = ({ getValue, row, column, table, options, selectClas
             className={`${selectClassName ?? "w-full h-full bg-transparent hover:bg-gray-50 rounded px-2 flex items-center justify-between cursor-pointer text-gray-700"}`}
           >
             <span className="truncate">{selectedOption?.label || value}</span>
-            <svg className="w-3 h-3 ml-1 opacity-40 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+            <Icons.ChevronDown className="w-3 h-3 ml-1 opacity-40 shrink-0" />
           </div>
         )}
       />
