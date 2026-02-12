@@ -8,9 +8,10 @@ import type { Row } from "@/features/data-grid/types";
 
 const DataGrid: React.FC = () => {
   const { data: rows = [], isLoading, isError } = useRowsData();
-  useRealtime();
-  const updateMutation = useUpdateRow();
   const columns = useColumnsData();
+  const updateMutation = useUpdateRow();
+
+  useRealtime();
 
   const handleUpdateData = useCallback(
     (_rowIndex: number, columnId: string, value: unknown, rowId: number) => {

@@ -1,12 +1,10 @@
 export const TableSkeleton = () => {
   return (
     <div className="flex flex-col h-full w-full bg-white text-[13px] font-sans text-gray-900 overflow-hidden rounded-lg shadow-sm">
-      {/* 1. App Header */}
       <div className="h-12 bg-sky-300 flex items-center px-4 shrink-0">
         <div className="w-32 h-6 bg-white/20 rounded animate-pulse"></div>
       </div>
 
-      {/* 2. Toolbar */}
       <div className="h-12 border-b border-gray-200 bg-white flex items-center px-4 gap-4 shadow-sm z-20 shrink-0">
         <div className="w-24 h-8 bg-gray-100 rounded animate-pulse"></div>
         <div className="ml-auto">
@@ -14,9 +12,7 @@ export const TableSkeleton = () => {
         </div>
       </div>
 
-      {/* 3. The Grid Skeleton */}
       <div className="flex-1 overflow-hidden bg-white relative">
-        {/* Header */}
         <div className="flex h-[32px] border-b border-gray-300 bg-[#f5f5f5]">
           {Array.from({ length: 15 }).map((_, i) => (
             <div key={i} className="w-[150px] border-r border-gray-300 px-2 flex items-center">
@@ -25,7 +21,6 @@ export const TableSkeleton = () => {
           ))}
         </div>
 
-        {/* Rows */}
         {Array.from({ length: 20 }).map((_, rowIndex) => (
           <div key={rowIndex} className="flex h-[32px] border-b border-gray-200 bg-white">
             {Array.from({ length: 15 }).map((_, colIndex) => (
@@ -37,7 +32,6 @@ export const TableSkeleton = () => {
         ))}
       </div>
 
-      {/* Footer */}
       <div className="h-9 border-t border-gray-200 bg-white flex items-center px-4 justify-between shrink-0">
         <div className="w-24 h-3 bg-gray-200 rounded animate-pulse"></div> <div className="w-24 h-3 bg-gray-200 rounded animate-pulse"></div>
       </div>

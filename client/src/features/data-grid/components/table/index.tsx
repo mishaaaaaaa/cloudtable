@@ -26,7 +26,6 @@ export const Table: React.FC<TableProps> = ({ rows, columns, onUpdateData }) => 
       globalFilter,
       columnFilters,
     },
-    // We handle state updates via our hook's setters passed to toolbar
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel,
@@ -39,13 +38,12 @@ export const Table: React.FC<TableProps> = ({ rows, columns, onUpdateData }) => 
 
   const { rows: tableRows } = table.getRowModel();
 
-  // Airtable uses a very compact, fixed height header
   const HEADER_HEIGHT = 32;
 
   const rowVirtualizer = useVirtualizer({
     count: tableRows.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 32, // Airtable standard row height
+    estimateSize: () => 32,
     overscan: 20,
   });
 
@@ -60,7 +58,6 @@ export const Table: React.FC<TableProps> = ({ rows, columns, onUpdateData }) => 
         columns={table.getAllLeafColumns()}
       />
 
-      {/* Grid Container */}
       <div ref={parentRef} className="flex-1 overflow-auto bg-white relative">
         <div
           style={{
@@ -69,7 +66,6 @@ export const Table: React.FC<TableProps> = ({ rows, columns, onUpdateData }) => 
             position: "relative",
           }}
         >
-          {/* Sticky Header Row */}
           <div
             className="flex sticky top-0 z-10 bg-[#f5f5f5] border-b border-gray-300 text-gray-500 font-semibold text-xs"
             style={{
@@ -78,7 +74,6 @@ export const Table: React.FC<TableProps> = ({ rows, columns, onUpdateData }) => 
               height: `${HEADER_HEIGHT}px`,
             }}
           >
-            {/* Header: Columns */}
             {table.getHeaderGroups().map((headerGroup) => (
               <React.Fragment key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -87,7 +82,6 @@ export const Table: React.FC<TableProps> = ({ rows, columns, onUpdateData }) => 
                     className="flex-shrink-0 border-r border-gray-300 px-2 flex items-center select-none hover:bg-gray-200 cursor-pointer group transition-colors"
                     style={{ width: header.getSize() }}
                   >
-                    {/* Icon based on column type usually goes here */}
                     <span className="text-gray-400 mr-1.5 dark:text-gray-500">
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
@@ -119,8 +113,6 @@ export const Table: React.FC<TableProps> = ({ rows, columns, onUpdateData }) => 
             ))}
           </div>
 
-          {/* Virtual Rows */}
-
           {rowVirtualizer.getVirtualItems().map((virtualRow) => {
             const row = tableRows[virtualRow.index];
             return (
@@ -134,7 +126,6 @@ export const Table: React.FC<TableProps> = ({ rows, columns, onUpdateData }) => 
                   minWidth: "100%",
                 }}
               >
-                {/* Cells: Data */}
                 {row.getVisibleCells().map((cell) => (
                   <div
                     key={cell.id}

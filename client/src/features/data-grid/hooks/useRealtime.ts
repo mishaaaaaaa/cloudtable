@@ -35,9 +35,6 @@ export const useRealtime = () => {
     socket.on("row_update", onRowUpdate);
 
     return () => {
-      // We do NOT disconnect the socket here to keep the connection alive
-      // when unmounting/remounting components.
-      // We only remove the listeners to avoid duplicates.
       socket.off("connect", onConnect);
       socket.off("connect_error", onConnectError);
       socket.off("row_update", onRowUpdate);

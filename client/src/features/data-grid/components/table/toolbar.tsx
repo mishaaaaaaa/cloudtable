@@ -37,7 +37,6 @@ export const TableToolbar: React.FC<TableToolbarProps> = ({ searchValue, setSear
           onChange={setSearchColumn}
           options={getSelectOptions()}
           className="relative"
-          align="right"
           renderTrigger={() => (
             <div className="flex items-center gap-1.5 px-2 py-1 text-[13px] text-gray-600 hover:bg-gray-100 rounded transition-colors border border-transparent hover:border-gray-200 h-[26px]">
               <span className="text-gray-500">Search in:</span>
