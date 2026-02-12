@@ -6,15 +6,23 @@ A high-performance data grid application capable of handling large datasets with
 
 The entire environment (Frontend, Backend, Database, Redis) is containerized.
 
-1. Run the application (from cloudtable directory) :
+Here are steps to launch CloudTable
+
+1. Check that the following ports are free on your machine:
+   - `5173` (Frontend)
+   - `4000` (Backend API)
+   - `5433` (PostgreSQL)
+   - `6379` (Redis)
+
+2. Run the application (from cloudtable directory) :
 
    ```bash
    docker-compose up --build
    ```
 
-2. Open your browser:
+3. Open your browser:
    - **Frontend:** http://localhost:5173
-   - **Backend API:** http://localhost:4000
+   - **Backend API:** http://localhost:4000 (don't need to open)
 
 ## Architecture Overview
 
@@ -76,3 +84,11 @@ Aliases (`@/`) are configured to keep imports clean (e.g., `import { Icon } from
 - **Horizontal Virtualization:** Currently, only vertical scrolling is virtualized. With 20 columns, this is performant, but for 50+ columns, horizontal virtualization would be added.
 - **Sorting:** Client-side sorting is not currently implemented in the UI (though supported by the underlying data structure).
 - **Mobile View:** The grid is optimized for desktop usage.
+
+## Future Improvements
+
+If I had more time, I would implement:
+
+- **Column Sorting:** Add ability to sort rows by clicking on column headers (ascending/descending).
+- **Horizontal Virtualization:** To support tables with hundreds of columns efficiently.
+- **Backend Pagination:** Switch from single-fetch to cursor-based pagination for datasets exceeding 100k+ rows.
