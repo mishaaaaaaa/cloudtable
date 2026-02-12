@@ -11,7 +11,7 @@ export const TableFooter: React.FC<TableFooterProps> = ({ recordCount }) => {
         <div>{recordCount.toLocaleString()} records</div>
       </div>
       <div className="flex items-center gap-4">
-        <div className="text-[11px] uppercase tracking-wide text-gray-400"> © 2026 Myjhailo Rudenko. All rights reserved.</div>
+        <div className="text-[11px] uppercase tracking-wide text-gray-400"> © 2026 Mykhailo Rudenko. All rights reserved.</div>
       </div>
     </div>
   );
