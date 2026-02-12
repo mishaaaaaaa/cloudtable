@@ -86,9 +86,6 @@ export const Table: React.FC<TableProps> = ({ rows, columns, onUpdateData }) => 
                       <Icons.ColumnType className="w-3 h-3" />
                     </span>
                     <span className="truncate">{flexRender(header.column.columnDef.header, header.getContext())}</span>
-                    <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Icons.ChevronDown className="w-3 h-3 text-gray-400" />
-                    </span>
                     <div
                       {...{
                         onMouseDown: header.getResizeHandler(),
