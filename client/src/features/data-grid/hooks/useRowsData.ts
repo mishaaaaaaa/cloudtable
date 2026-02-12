@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchRows, updateRow } from "@/api/table";
+import { fetchRows, updateRow } from "@/api/data-grid";
 import type { Row } from "@/features/data-grid/types";
 import { KEYS } from "@/features/data-grid/data/constants";
 

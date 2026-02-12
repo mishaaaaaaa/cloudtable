@@ -26,7 +26,7 @@ const DataGrid: React.FC = () => {
 
   return (
     <TableWrapper isLoading={isLoading} isError={isError}>
-      <Table rows={rows} columns={columns} onUpdateData={handleUpdateData} />;
+      <Table rows={rows} columns={columns} onUpdateData={handleUpdateData} />
     </TableWrapper>
   );
 };
