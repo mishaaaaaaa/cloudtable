@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { CellContext } from "@tanstack/react-table";
-import { Select, type SelectOption } from "@/components/ui/select";
+import { Select, type SelectOption } from "@/shared/ui/select";
 import type { Row } from "@/features/table/types";
 
 type DropdownCellProps = CellContext<Row, unknown> & {
@@ -12,7 +12,6 @@ export const DropdownCell = ({ getValue, row, column, table, options, selectClas
   const initialValue = String(getValue() ?? "");
   const [value, setValue] = useState(initialValue);
 
-  // Sync with external updates
   useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
@@ -23,7 +22,7 @@ export const DropdownCell = ({ getValue, row, column, table, options, selectClas
   }));
 
   const handleChange = (newValue: string) => {
-    setValue(newValue); // Immediate local update
+    setValue(newValue);
     table.options.meta?.updateData(row.index, column.id as keyof Row, newValue, row.original.id);
   };
 
@@ -35,7 +34,6 @@ export const DropdownCell = ({ getValue, row, column, table, options, selectClas
         options={selectOptions}
         placeholder="Select..."
         className="w-full h-full"
-        dropdownClassName="absolute left-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50 transform -translate-y-1"
         renderTrigger={(selectedOption) => (
           <div
             className={`${selectClassName ?? "w-full h-full bg-transparent hover:bg-gray-50 rounded px-2 flex items-center justify-between cursor-pointer text-gray-700"}`}
@@ -46,7 +44,6 @@ export const DropdownCell = ({ getValue, row, column, table, options, selectClas
             </svg>
           </div>
         )}
-        align="left"
       />
     </div>
   );
