@@ -1,25 +1,26 @@
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { io } from "socket.io-client";
+import { socket } from "@/api/socket";
 import { KEYS } from "@/features/table/data/constants";
 import type { Row } from "@/features/table/types";
-import { SOCKET_URL } from "@/config";
 
 export const useRealtime = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const socket = io(SOCKET_URL);
+    if (!socket.connected) {
+      socket.connect();
+    }
 
-    socket.on("connect", () => {
+    const onConnect = () => {
       console.log("socket: connected");
-    });
+    };
 
-    socket.on("connect_error", (error) => {
+    const onConnectError = (error: Error) => {
       console.error("socket: connect_error", error);
-    });
+    };
 
-    socket.on("row_update", (updatedRow: Row) => {
+    const onRowUpdate = (updatedRow: Row) => {
       console.log("socket: row_update", updatedRow);
 
       queryClient.setQueryData<Row[]>(KEYS.ROWS, (oldRows) => {
@@ -27,10 +28,19 @@ export const useRealtime = () => {
 
         return oldRows.map((row) => (row.id === updatedRow.id ? updatedRow : row));
       });
-    });
+    };
+
+    socket.on("connect", onConnect);
+    socket.on("connect_error", onConnectError);
+    socket.on("row_update", onRowUpdate);
 
     return () => {
-      socket.disconnect();
+      // We do NOT disconnect the socket here to keep the connection alive
+      // when unmounting/remounting components.
+      // We only remove the listeners to avoid duplicates.
+      socket.off("connect", onConnect);
+      socket.off("connect_error", onConnectError);
+      socket.off("row_update", onRowUpdate);
     };
   }, [queryClient]);
 };
